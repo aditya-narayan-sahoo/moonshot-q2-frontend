@@ -1,4 +1,5 @@
 import Sidebar from "./Sidebar";
+import Modal from "./Modal";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
 import ShareChart from "./ShareChart";
@@ -158,10 +159,8 @@ const MainContainer = () => {
   return (
     <main className="flex flex-col min-h-screen">
       <div className="relative flex flex-col lg:flex-row flex-1">
-        {/* Sidebar */}
         <Sidebar onFilterChange={handleFilterChange} />
 
-        {/* Chart section */}
         <section
           className={`flex-1 p-4 transition-all duration-300 ${
             isShareModalOpen ? "mr-80" : "mx-auto"
@@ -199,15 +198,12 @@ const MainContainer = () => {
           </button>
         </section>
 
-        {/* Share chart component */}
-        {isShareModalOpen && (
-          <div className="absolute top-0 right-0 w-80 h-full bg-white shadow-lg z-50">
-            <ShareChart
-              url={shareUrl}
-              onClose={() => setIsShareModalOpen(false)}
-            />
-          </div>
-        )}
+        <Modal
+          isOpen={isShareModalOpen}
+          onClose={() => setIsShareModalOpen(false)}
+        >
+          <ShareChart url={shareUrl} />
+        </Modal>
       </div>
     </main>
   );
